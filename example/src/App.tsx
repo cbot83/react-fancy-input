@@ -1,10 +1,16 @@
-import React from 'react'
-
-import { ExampleComponent } from 'react-input-with-html'
-import 'react-input-with-html/dist/index.css'
+import React, { useState } from 'react'
+import HTMLInput from 'react-input-with-html'
+import './style.css'
 
 const App = () => {
-  return <ExampleComponent text="Create React Library Example 😄" />
+  const [input, setInput] = useState('')
+
+  return (
+    <>
+      <h1 className={'title'}>Search for your stuff</h1>
+      <HTMLInput id='input' html={input} onChange={setInput} />
+    </>
+  )
 }
 
 export default App
