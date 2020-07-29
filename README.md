@@ -45,7 +45,7 @@ You need to pass an Array of ModifierObj(s) see type below
 ```
 type ModifierObj = {
   regexMatch: RegExp
-  htmlModification: string | any // need better function definition
+  htmlModification: string | Function // need better function definition, it has to return a html represented as string
 }
 ```
 
@@ -54,6 +54,18 @@ The regexMatch is a regular expression to find the instances you want to modify
 The htmlModification is the string that includes the html for what you're changing it to. This can be a string or a function that returns the string.
 
 put examples here...
+
+## Playground
+
+will be more of a playground in the future
+
+[Try it out](https://cbot83.github.io/react-input-with-html/)
+
+## Important Notes
+
+don't use v1 of this library. It's a very limited concept with lots of bugs.
+
+
 
 ## License
 
