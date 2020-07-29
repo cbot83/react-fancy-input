@@ -58,6 +58,9 @@ const HTMLInput = ({
   useEffect(() => {
     if (value) {
       const inputDisplay = buildStyledString(value)
+      // clears out any new lines
+      const newLineRegex = /\r?\n|\r/g
+      inputDisplay.replace(newLineRegex, '')
       setInputWithHTML(inputDisplay)
     } else if (!value) {
       setInputWithHTML('')
@@ -101,15 +104,15 @@ const HTMLInput = ({
         const uniqueArr = [...new Set(arr)]
 
         const modifyAll = () => {
-          const value = uniqueArr?.forEach((value) => {
+          const value = uniqueArr?.forEach((v) => {
             const correctModifier =
               typeof modifier.htmlMod === 'string'
                 ? modifier.htmlMod
-                : modifier.htmlMod(value)
+                : modifier.htmlMod(v)
 
             // function htmlMods can match many different strings and need special treatment
             if (typeof modifier.htmlMod === 'function') {
-              const re = new RegExp(value, 'g')
+              const re = new RegExp(v, 'g')
               mutableInput = mutableInput?.replace(re, correctModifier)
             } else {
               mutableInput = mutableInput?.replace(
@@ -136,7 +139,7 @@ const HTMLInput = ({
     <div
       id={id}
       // respects any spaces
-      style={{ whiteSpace: 'nowrap', overflow: 'hidden' }}
+      style={{ whiteSpace: 'pre', overflow: 'hidden' }}
       contentEditable={!disabled}
       onInput={emitChange}
       onBlur={onBlur || emitChange}

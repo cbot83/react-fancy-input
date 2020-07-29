@@ -11,7 +11,7 @@ const App = () => {
   }
 
   const dynamicHexMod = (value: string) => {
-    return `<span style="position: absolute; background-color: ${value}; height: 24px; width: 24px; top: 20px; border-radius: 50px;"></span><span style="padding-left: 32px">${value}</span>`
+    return `<span class="hex-dot" style="--color: ${value};">${value}</span>`
   }
 
   const modifierArr = [
