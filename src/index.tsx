@@ -13,15 +13,16 @@ import {
 
 type ModifierObj = {
   regexMatch: RegExp
-  htmlModification: string | any // need better function definition
+  htmlMod: string | Function // if it's a function than it's matching many different strings possibly
   match?: boolean
 }
 
 type Props = {
   id: string
-  originalString: string
+  value: string
   modifierArr: ModifierObj[]
   onChange: (arg1: string) => void // your `setInput` string hook;
+  onSubmit?: Function
   disabled?: boolean
   className?: string
   onBlur?: any
@@ -32,11 +33,12 @@ type Props = {
 
 const HTMLInput = ({
   id,
-  originalString,
+  value,
   modifierArr,
   disabled = false,
   spellCheck = true,
   onChange,
+  onSubmit,
   onBlur,
   onKeyUp,
   onKeyDown,
@@ -54,15 +56,27 @@ const HTMLInput = ({
   }, [inputWithHTML])
 
   useEffect(() => {
-    if (originalString) {
-      const inputDisplay = buildStyledString(originalString)
+    if (value) {
+      const inputDisplay = buildStyledString(value)
       setInputWithHTML(inputDisplay)
-    } else if (!originalString) {
+    } else if (!value) {
       setInputWithHTML('')
     }
-  }, [originalString])
+  }, [value])
 
   const emitChange = (e: any) => {
+    // handle enter and call onSubmit if it was give
+    const enter = e.keyCode === 13
+    if (enter && onSubmit) {
+      e.preventDefault()
+      onSubmit()
+      return
+    }
+    if (enter) {
+      e.preventDefault()
+      return
+    }
+
     const el = e.currentTarget
     const position = getCaretPosition(el)
 
@@ -70,17 +84,17 @@ const HTMLInput = ({
     setCaretPos(position)
   }
 
-  const buildStyledString = (originalString: string): string => {
-    let mutableInput = clone(originalString)
+  const buildStyledString = (value: string): string => {
+    let mutableInput = clone(value)
 
     // adds match true or false to modifierObj
     const mutableModifier = modifierArr.map((modifier) => {
-      const match = modifier.regexMatch.test(originalString)
+      const match = modifier.regexMatch.test(value)
       modifier.match = match
       return modifier
     })
 
-    // for each match, find every stance and run the modification
+    // for each match, find every instance and run the modification
     mutableModifier.forEach((modifier) => {
       if (modifier.match) {
         const arr = mutableInput?.match(modifier.regexMatch)
@@ -89,14 +103,20 @@ const HTMLInput = ({
         const modifyAll = () => {
           const value = uniqueArr?.forEach((value) => {
             const correctModifier =
-              typeof modifier.htmlModification === 'string'
-                ? modifier.htmlModification
-                : modifier.htmlModification(value)
-            //
-            mutableInput = mutableInput?.replace(
-              modifier.regexMatch,
-              correctModifier
-            )
+              typeof modifier.htmlMod === 'string'
+                ? modifier.htmlMod
+                : modifier.htmlMod(value)
+
+            // function htmlMods can match many different strings and need special treatment
+            if (typeof modifier.htmlMod === 'function') {
+              const re = new RegExp(value, 'g')
+              mutableInput = mutableInput?.replace(re, correctModifier)
+            } else {
+              mutableInput = mutableInput?.replace(
+                modifier.regexMatch,
+                correctModifier
+              )
+            }
           })
           return value
         }
@@ -105,12 +125,17 @@ const HTMLInput = ({
       }
     })
 
+    // clears out any new lines
+    const newLineRegex = /\r?\n|\r/g
+    mutableInput.replace(newLineRegex, '')
+
     return mutableInput
   }
 
   return (
     <div
       id={id}
+      // respects any spaces
       style={{ whiteSpace: 'nowrap', overflow: 'hidden' }}
       contentEditable={!disabled}
       onInput={emitChange}
@@ -118,6 +143,7 @@ const HTMLInput = ({
       onKeyUp={onKeyUp || emitChange}
       onKeyDown={onKeyDown || emitChange}
       dangerouslySetInnerHTML={{ __html: normalizeHtml(inputWithHTML) }}
+      spellCheck={spellCheck}
       {...props}
     />
   )
