@@ -18,10 +18,19 @@
   border-radius: 5px;
   width: 400px;
   height: 50px;
-  margin: 0 auto;
   padding: 10px;
   font-size: 40px;
-  position: relative;
+}
+
+#input-placeholder {
+  padding: 10px;
+  font-size: 40px;
+  color: #5c5c5c;
+  width: 400px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  pointer-events: none;
 }
 
 .hex-dot::before {

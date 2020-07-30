@@ -31,6 +31,7 @@ const App = () => {
       <HTMLInput
         id='input'
         value={input}
+        placeholder='Search our curated collection'
         onChange={setInput}
         onSubmit={handleSubmit}
         modifierArr={modifierArr}
