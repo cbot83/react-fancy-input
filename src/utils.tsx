@@ -4,8 +4,10 @@ export const normalizeHtml = (str: string): string => {
 }
 
 // getting current position of caret to set in state as a reference
-export const getCaretPosition = (el: HTMLDivElement) => {
+export const getCaretPosition = (el: HTMLDivElement | null) => {
   let caretOffset = 0
+
+  if (!el) return
 
   if (typeof window.getSelection !== 'undefined') {
     const range = window.getSelection()?.getRangeAt(0)
