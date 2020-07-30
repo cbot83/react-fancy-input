@@ -1,6 +1,6 @@
 {
   "name": "react-input-with-html",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "A react input component that uses contenteditable on a div to display the input value with html cut in for that touch of fancy.",
   "author": "cbot83",
   "license": "MIT",

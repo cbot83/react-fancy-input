@@ -20,7 +20,6 @@ type ModifierObj = {
 type Props = {
   id: string
   value: string
-  placeholder: string
   modifierArr: ModifierObj[]
   onChange: (arg1: string) => void // your `setInput` string hook;
   onSubmit?: Function
@@ -35,7 +34,6 @@ type Props = {
 const HTMLInput = ({
   id,
   value,
-  placeholder,
   modifierArr,
   disabled = false,
   spellCheck = true,
@@ -135,29 +133,19 @@ const HTMLInput = ({
   }
 
   return (
-    <div style={{ position: 'relative', display: 'table', margin: '0 auto' }}>
-      <div
-        id={id}
-        // respects any spaces
-        style={{ whiteSpace: 'pre', overflow: 'hidden' }}
-        contentEditable={!disabled}
-        onInput={emitChange}
-        onBlur={onBlur || emitChange}
-        onKeyUp={onKeyUp || emitChange}
-        onKeyDown={onKeyDown || emitChange}
-        dangerouslySetInnerHTML={{ __html: normalizeHtml(inputWithHTML) }}
-        spellCheck={spellCheck}
-        {...props}
-      />
-      {placeholder && !value && (
-        <div
-          style={{ position: 'absolute', top: 0, left: 0 }}
-          id={`${id}-placeholder`}
-        >
-          {placeholder}
-        </div>
-      )}
-    </div>
+    <div
+      id={id}
+      // respects any spaces
+      style={{ whiteSpace: 'pre', overflow: 'hidden' }}
+      contentEditable={!disabled}
+      onInput={emitChange}
+      onBlur={onBlur || emitChange}
+      onKeyUp={onKeyUp || emitChange}
+      onKeyDown={onKeyDown || emitChange}
+      dangerouslySetInnerHTML={{ __html: normalizeHtml(inputWithHTML) }}
+      spellCheck={spellCheck}
+      {...props}
+    />
   )
 }
 
