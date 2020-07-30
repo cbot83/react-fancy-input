@@ -2,7 +2,7 @@
 
 > A react input component that uses contenteditable on a div to display the input value with html cut in for that touch of fancy
 
-[![NPM](https://img.shields.io/npm/v/react-input-with-html.svg)](https://www.npmjs.com/package/react-input-with-html) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)[![bundle size](https://img.shields.io/bundlephobia/minzip/react-contenteditable.svg)](https://www.npmjs.com/package/react-input-with-html)
+[![NPM](https://img.shields.io/npm/v/react-input-with-html.svg)](https://www.npmjs.com/package/react-input-with-html) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com) [![bundle size](https://img.shields.io/bundlephobia/minzip/react-contenteditable.svg)](https://www.npmjs.com/package/react-input-with-html)
 
 ## Install
 
