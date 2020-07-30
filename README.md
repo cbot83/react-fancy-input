@@ -15,11 +15,36 @@ npm install --save react-input-with-html
 ```tsx
 import React, { useState } from 'react'
 import HTMLInput from 'react-input-with-html'
+// have to import style sheet for basic input styles and special hex option style
+import 'react-input-with-html/dist/index.css'
 
 const App = () => {
   const [input, setInput] = useState('')
 
-  return <HTMLInput id='input' html={input} onChange={setInput} />
+  const handleSubmit = () => {
+    // submit what is in the input state however you want here
+    console.log('input on submit: ', input)
+  }
+
+  // basic style for +'s
+  const modifierArr = [
+    {
+      regexMatch: /\+/g,
+      htmlMod: `<span style="color: #a3a3a3">+</span>`
+    }
+  ]
+
+  return (
+    <HTMLInput
+      id='input'
+      value={input}
+      onChange={setInput}
+      onSubmit={handleSubmit}
+      modifierArr={modifierArr}
+      spellCheck={false}
+      hexDot={true}
+    />
+  )
 }
 ```
 
@@ -109,6 +134,8 @@ make this into a playground in the future
 ## Helpful Posts
 
 [Level Up Make a React Library](https://levelup.gitconnected.com/create-your-own-react-library-in-2020-step-by-step-7c39eb1b2d7b)
+
+create-react-library
 
 [Medium Article about Caret Position](https://medium.com/compass-true-north/a-dancing-caret-the-unknown-perils-of-adjusting-cursor-position-f252734f595e)
 

@@ -1,9 +1,11 @@
 /**
  * an input element that can display programatic html but only takes string input
+ * with a built in hex dot option
  */
 
 import { clone } from 'lodash'
 import React, { useEffect, useState } from 'react'
+import styles from './styles.module.css'
 import {
   getCaretData,
   getCaretPosition,
@@ -29,19 +31,21 @@ type Props = {
   onKeyUp?: any
   onKeyDown?: any
   spellCheck?: boolean
+  hexDot?: boolean
 }
 
 const HTMLInput = ({
   id,
   value,
-  modifierArr,
   disabled = false,
   spellCheck = true,
   onChange,
+  modifierArr,
   onSubmit,
   onBlur,
   onKeyUp,
   onKeyDown,
+  hexDot,
   ...props
 }: Props) => {
   const [inputWithHTML, setInputWithHTML] = useState('')
@@ -81,14 +85,29 @@ const HTMLInput = ({
     const position = getCaretPosition(el)
 
     onChange(el.innerText)
-    setCaretPos(position ?? -1)
+    setCaretPos(position || -1)
   }
 
   const buildStyledString = (value: string): string => {
     let mutableInput = clone(value)
 
+    const mutableModifierArr = clone(modifierArr)
+
+    if (hexDot) {
+      const dynamicHexMod = (value: string) => {
+        return `<span class=${styles.hexdot} style="--color: ${value};">${value}</span>`
+      }
+
+      const hexDot = {
+        // only matches hex codes that aren't in style
+        regexMatch: /(?<!:\s*)#[0-9A-F]{6}/gi,
+        htmlMod: dynamicHexMod
+      }
+      mutableModifierArr.push(hexDot)
+    }
+
     // adds match true or false to modifierObj
-    const mutableModifier = modifierArr.map((modifier) => {
+    const mutableModifier = mutableModifierArr.map((modifier) => {
       const match = modifier.regexMatch.test(value)
       modifier.match = match
       return modifier
@@ -135,8 +154,8 @@ const HTMLInput = ({
   return (
     <div
       id={id}
-      // respects any spaces
-      style={{ whiteSpace: 'pre', overflow: 'hidden' }}
+      // respects any spaces and styles close to a native input
+      className={styles.input}
       contentEditable={!disabled}
       onInput={emitChange}
       onBlur={onBlur || emitChange}

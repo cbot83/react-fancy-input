@@ -22,30 +22,3 @@
   font-size: 40px;
 }
 
-#input-placeholder {
-  padding: 10px;
-  font-size: 40px;
-  color: #5c5c5c;
-  width: 400px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  pointer-events: none;
-}
-
-.hex-dot::before {
-  background-color: var(--color);
-  content: "";
-  margin: 0 auto;
-  position: absolute;
-  top: 10px;
-  width: 26px;
-  height: 26px;
-  left: 2px;
-  border-radius: 50px;
-}
-
-.hex-dot {
-  position: relative;
-  padding-left: 32px;
-}

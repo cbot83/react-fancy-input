@@ -1,9 +1,24 @@
 /* add css module styles here (optional) */
+/* move inline style to here */
 
-.test {
-  margin: 2em;
-  padding: 0.5em;
-  border: 2px solid #000;
-  font-size: 2em;
-  text-align: center;
+.hexdot {
+  position: relative;
+  padding-left: 32px;
+}
+
+.hexdot::before {
+  background-color: var(--color);
+  content: "";
+  margin: 0 auto;
+  position: absolute;
+  top: 10px;
+  width: 26px;
+  height: 26px;
+  left: 2px;
+  border-radius: 50px;
+}
+
+.input {
+  white-space: pre;
+  overflow: hidden;
 }

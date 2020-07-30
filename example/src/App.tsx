@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import HTMLInput from 'react-input-with-html'
+import 'react-input-with-html/dist/index.css'
 import './style.css'
 
 const App = () => {
@@ -10,15 +11,7 @@ const App = () => {
     console.log('input on submit: ', input)
   }
 
-  const dynamicHexMod = (value: string) => {
-    return `<span class="hex-dot" style="--color: ${value};">${value}</span>`
-  }
-
   const modifierArr = [
-    {
-      regexMatch: /#[0-9A-F]{6}/gi,
-      htmlMod: dynamicHexMod
-    },
     {
       regexMatch: /\+/g,
       htmlMod: `<span style="color: #a3a3a3">+</span>`
@@ -35,6 +28,7 @@ const App = () => {
         onSubmit={handleSubmit}
         modifierArr={modifierArr}
         spellCheck={false}
+        hexDot={true}
       />
     </>
   )
