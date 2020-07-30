@@ -83,7 +83,7 @@ const HTMLInput = ({
     const position = getCaretPosition(el)
 
     onChange(el.innerText)
-    setCaretPos(position)
+    setCaretPos(position ?? -1)
   }
 
   const buildStyledString = (value: string): string => {
