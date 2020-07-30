@@ -21,4 +21,22 @@
   margin: 0 auto;
   padding: 10px;
   font-size: 40px;
+  position: relative;
+}
+
+.hex-dot::before {
+  background-color: var(--color);
+  content: "";
+  margin: 0 auto;
+  position: absolute;
+  top: 10px;
+  width: 26px;
+  height: 26px;
+  left: 2px;
+  border-radius: 50px;
+}
+
+.hex-dot {
+  position: relative;
+  padding-left: 32px;
 }
