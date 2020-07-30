@@ -1,7 +1,7 @@
-import { ExampleComponent } from '.'
+import HTMLInput from '.'
 
-describe('ExampleComponent', () => {
+describe('HTMLInput', () => {
   it('is truthy', () => {
-    expect(ExampleComponent).toBeTruthy()
+    expect(HTMLInput).toBeTruthy()
   })
 })
