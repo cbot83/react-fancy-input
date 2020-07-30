@@ -58,9 +58,6 @@ const HTMLInput = ({
   useEffect(() => {
     if (value) {
       const inputDisplay = buildStyledString(value)
-      // clears out any new lines
-      const newLineRegex = /\r?\n|\r/g
-      inputDisplay.replace(newLineRegex, '')
       setInputWithHTML(inputDisplay)
     } else if (!value) {
       setInputWithHTML('')
