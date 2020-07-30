@@ -1,21 +1,38 @@
 /* add css module styles here (optional) */
 /* move inline style to here */
 
-.hexdot {
+.hexdot_24 {
   position: relative;
-  padding-left: 32px;
+  padding-left: 24px;
 }
 
-.hexdot::before {
+.hexdot_24::before {
   background-color: var(--color);
   content: "";
-  margin: 0 auto;
   position: absolute;
-  top: 10px;
-  width: 26px;
-  height: 26px;
+  top: 8px;
+  width: 16px;
+  height: 16px;
+  left: 4px;
+  border-radius: 50px;
+  border: 1px dotted;
+}
+
+.hexdot_11 {
+  position: relative;
+  padding-left: 16px;
+}
+
+.hexdot_11::before {
+  background-color: var(--color);
+  content: "";
+  position: absolute;
+  top: 2px;
+  width: 12px;
+  height: 12px;
   left: 2px;
   border-radius: 50px;
+  border: 1px dotted;
 }
 
 .input {

@@ -12,6 +12,12 @@ npm install --save react-input-with-html
 
 ## Usage
 
+This is starting as a bit of a custom thing for Stocksy, but I plan on making it into a more broadly useful library.
+
+Most of the custom props and usage just arn't in this readme.
+
+Use this at your own risk for now.
+
 ```tsx
 import React, { useState } from 'react'
 import HTMLInput from 'react-input-with-html'
@@ -121,6 +127,14 @@ publish package to NPM
 ```bash
 npm publish
 ```
+
+publish beta or package
+```bash
+npm publish --tag beta
+```
+
+version should have -beta.xx after version
+
 
 deploy example to Github pages
 ```bash

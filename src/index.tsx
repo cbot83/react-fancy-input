@@ -19,11 +19,17 @@ type ModifierObj = {
   match?: boolean
 }
 
+type HexDotObj = {
+  enable: boolean
+  fontSize: number
+}
+
 type Props = {
   id: string
   value: string
   modifierArr: ModifierObj[]
   onChange: (arg1: string) => void // your `setInput` string hook;
+  highlightThis?: string | boolean
   onSubmit?: Function
   disabled?: boolean
   className?: string
@@ -31,7 +37,8 @@ type Props = {
   onKeyUp?: any
   onKeyDown?: any
   spellCheck?: boolean
-  hexDot?: boolean
+  hexDot?: HexDotObj
+  style?: any
 }
 
 const HTMLInput = ({
@@ -46,6 +53,8 @@ const HTMLInput = ({
   onKeyUp,
   onKeyDown,
   hexDot,
+  style,
+  highlightThis,
   ...props
 }: Props) => {
   const [inputWithHTML, setInputWithHTML] = useState('')
@@ -58,6 +67,32 @@ const HTMLInput = ({
     // only place caret if there is somewhere for it to go
     if (caretData.node) placeCaret(caretData)
   }, [inputWithHTML])
+
+  useEffect(() => {
+    const highlightedString = (inputDisplay: string): string => {
+      let mutableInput = clone(inputDisplay)
+      if (highlightThis && typeof highlightThis === 'string') {
+        // @ts-ignore
+        const re = new RegExp(`(?<!: *)${highlightThis}`, 'gi')
+
+        mutableInput = mutableInput.replace(
+          re,
+          `<span style="background-color: #b4ffc4">${highlightThis}</span>`
+        )
+      } else if (highlightThis && typeof highlightThis === 'boolean') {
+        mutableInput = `<span style="background-color: #b4ffc4">${inputDisplay}</span>`
+      }
+      return mutableInput
+    }
+
+    const inputDisplay = buildStyledString(value)
+    if (highlightThis) {
+      const highlighted = highlightedString(inputDisplay)
+      setInputWithHTML(highlighted)
+    } else {
+      setInputWithHTML(inputDisplay)
+    }
+  }, [highlightThis])
 
   useEffect(() => {
     if (value) {
@@ -91,11 +126,15 @@ const HTMLInput = ({
   const buildStyledString = (value: string): string => {
     let mutableInput = clone(value)
 
+    const fontSize = hexDot?.fontSize === 24 ? 24 : 11
+
     const mutableModifierArr = clone(modifierArr)
 
-    if (hexDot) {
-      const dynamicHexMod = (value: string) => {
-        return `<span class=${styles.hexdot} style="--color: ${value};">${value}</span>`
+    if (hexDot?.enable) {
+      const dynamicHexMod = (value: string): any => {
+        return `<span class="${
+          fontSize === 24 ? styles.hexdot_24 : styles.hexdot_11
+        }" style="--color: ${value}">${value}</span>`
       }
 
       const hexDot = {
@@ -117,7 +156,10 @@ const HTMLInput = ({
     mutableModifier.forEach((modifier) => {
       if (modifier.match) {
         const arr = mutableInput?.match(modifier.regexMatch)
-        const uniqueArr = [...new Set(arr)]
+        const unique = (value: any, index: any, self: any) => {
+          return self.indexOf(value) === index
+        }
+        const uniqueArr = arr?.filter(unique)
 
         const modifyAll = () => {
           const value = uniqueArr?.forEach((v) => {
@@ -163,6 +205,7 @@ const HTMLInput = ({
       onKeyDown={onKeyDown || emitChange}
       dangerouslySetInnerHTML={{ __html: normalizeHtml(inputWithHTML) }}
       spellCheck={spellCheck}
+      style={style}
       {...props}
     />
   )

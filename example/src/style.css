@@ -14,11 +14,36 @@
 }
 
 #input {
-  border: 1px solid #e26fe2;
-  border-radius: 5px;
+  outline: 0;
+  box-shadow: none;
+  font-size: 24px;
+  font-family: 'Poppins',sans-serif;
+  font-weight: 300;
+  font-size: 24px;
+  line-height: 40px;
+  padding: 24px;
+  background-color: white;
+  margin: 0 auto;
   width: 400px;
-  height: 50px;
-  padding: 10px;
-  font-size: 40px;
 }
 
+#input-nav {
+  font-family: 'Poppins',sans-serif;
+  background-color: white;
+  font-weight: normal;
+  font-size: 11px;
+  line-height: 16px;
+  letter-spacing: 0.5px;
+  line-height: 12px;
+  border: none;
+  height: 12px;
+  width: 264px;
+  padding: 14px 12px;
+  white-space: pre;
+  overflow: hidden;
+  margin: 0 auto;
+}
+
+#input-nav:active {
+  outline: none;
+}
