@@ -66,6 +66,7 @@ const App = () => {
 |onKeyUp|called whenever a key is released|Function|
 |onKeyDown|called whenever a key is pressed |Function|
 |spellCheck|toggles auto underlining spelling errors|Boolean|
+<!-- |hexDot|info for how to show hex dots after hex codes|Obj| **for this to work, any inline hex codes must have "> after them -->
 
 ## Modifier Arr
 

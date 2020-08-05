@@ -73,7 +73,7 @@ const HTMLInput = ({
       let mutableInput = clone(inputDisplay)
       if (highlightThis && typeof highlightThis === 'string') {
         // @ts-ignore
-        const re = new RegExp(`(?<!: *)${highlightThis}`, 'gi')
+        const re = new RegExp(`${highlightThis}(?!">)`, 'gi')
 
         mutableInput = mutableInput.replace(
           re,
@@ -138,8 +138,8 @@ const HTMLInput = ({
       }
 
       const hexDot = {
-        // only matches hex codes that aren't in style
-        regexMatch: /(?<!:\s*)#[0-9A-F]{6}/gi,
+        // only matches hex codes that aren't in style (followed by ")
+        regexMatch: /#[0-9A-F]{6}(?!">)/gi,
         htmlMod: dynamicHexMod
       }
       mutableModifierArr.push(hexDot)
