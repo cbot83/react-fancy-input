@@ -72,8 +72,21 @@ const HTMLInput = ({
     const highlightedString = (inputDisplay: string): string => {
       let mutableInput = clone(inputDisplay)
       if (highlightThis && typeof highlightThis === 'string') {
-        // @ts-ignore
-        const re = new RegExp(`${highlightThis}(?!">)`, 'gi')
+        const re = new RegExp(
+          `${highlightThis
+            // handle all of the special characters that need to be escaped
+            .replace('*', '\\*')
+            .replace('[', '\\[')
+            .replace('^', '\\^')
+            .replace('$', '\\$')
+            .replace('.', '\\.')
+            .replace('|', '\\|')
+            .replace('?', '\\?')
+            .replace('+', '\\+')
+            .replace('(', '\\(')
+            .replace(')', '\\)')}(?!">)`,
+          'gi'
+        )
 
         mutableInput = mutableInput.replace(
           re,

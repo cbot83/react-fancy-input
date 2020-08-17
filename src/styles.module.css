@@ -1,6 +1,13 @@
 /* add css module styles here (optional) */
 /* move inline style to here */
 
+.hexdot {
+  border: 1px solid black;
+  background-color: var(--color);
+  width: var(--width);
+  height: var(--height);
+}
+
 .hexdot_24 {
   position: relative;
   padding-left: 24px;
@@ -8,7 +15,7 @@
 
 .hexdot_24::before {
   background-color: var(--color);
-  content: "";
+  content: '';
   position: absolute;
   top: 8px;
   width: 16px;
@@ -25,7 +32,7 @@
 
 .hexdot_11::before {
   background-color: var(--color);
-  content: "";
+  content: '';
   position: absolute;
   top: 2px;
   width: 12px;

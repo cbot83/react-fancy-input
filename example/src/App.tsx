@@ -56,6 +56,16 @@ const App = () => {
 
       <div style={{ textAlign: 'center', margin: 12 }}>
         <button
+          onClick={() => setInputHero('*')}
+          onMouseEnter={() => setHighlightThis('*')}
+          onMouseLeave={() => setHighlightThis('')}
+        >
+          *
+        </button>
+      </div>
+
+      <div style={{ textAlign: 'center', margin: 12 }}>
+        <button
           onClick={() => setInputHero('')}
           onMouseEnter={() => setHighlightThis(true)}
           onMouseLeave={() => setHighlightThis('')}
