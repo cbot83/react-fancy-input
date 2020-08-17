@@ -21,7 +21,12 @@ type ModifierObj = {
 
 type HexDotObj = {
   enable: boolean
-  fontSize: number
+  style: {
+    width: string
+    height: string
+    top: string
+    left: string
+  }
 }
 
 type Props = {
@@ -98,7 +103,7 @@ const HTMLInput = ({
       return mutableInput
     }
 
-    const inputDisplay = buildStyledString(value)
+    const inputDisplay = buildStyledString(value, hexDot)
     if (highlightThis) {
       const highlighted = highlightedString(inputDisplay)
       setInputWithHTML(highlighted)
@@ -109,7 +114,7 @@ const HTMLInput = ({
 
   useEffect(() => {
     if (value) {
-      const inputDisplay = buildStyledString(value)
+      const inputDisplay = buildStyledString(value, hexDot)
       setInputWithHTML(inputDisplay)
     } else if (!value) {
       setInputWithHTML('')
@@ -136,18 +141,24 @@ const HTMLInput = ({
     setCaretPos(position || -1)
   }
 
-  const buildStyledString = (value: string): string => {
+  const buildStyledString = (
+    value: string,
+    hexDot: HexDotObj | undefined
+  ): string => {
     let mutableInput = clone(value)
-
-    const fontSize = hexDot?.fontSize === 24 ? 24 : 11
 
     const mutableModifierArr = clone(modifierArr)
 
-    if (hexDot?.enable) {
-      const dynamicHexMod = (value: string): any => {
-        return `<span class="${
-          fontSize === 24 ? styles.hexdot_24 : styles.hexdot_11
-        }" style="--color: ${value}">${value}</span>`
+    if (hexDot) {
+      const dynamicHexMod = (value: string, hexDot: HexDotObj): any => {
+        return `<span class="${styles.hexdot}" 
+          style="
+            --width: ${hexDot.style.width}; 
+            --height: ${hexDot.style.height}; 
+            --top: ${hexDot.style.top}; 
+            --left: ${hexDot.style.left};
+            --border: ${value === '#ffffff' ? '1px solid #A3A3A3' : 'unset'};
+            --color: ${value}">${value}</span>`
       }
 
       const hexDot = {
@@ -179,7 +190,7 @@ const HTMLInput = ({
             const correctModifier =
               typeof modifier.htmlMod === 'string'
                 ? modifier.htmlMod
-                : modifier.htmlMod(v)
+                : modifier.htmlMod(v, hexDot)
 
             // function htmlMods can match many different strings and need special treatment
             if (typeof modifier.htmlMod === 'function') {

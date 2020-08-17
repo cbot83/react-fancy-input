@@ -22,12 +22,22 @@ const App = () => {
 
   const hexDotHero = {
     enable: true,
-    fontSize: 24
+    style: {
+      width: '24px',
+      height: '24px',
+      top: '4px',
+      left: '4px'
+    }
   }
 
   const hexDotNav = {
     enable: true,
-    fontSize: 11
+    style: {
+      width: '11px',
+      height: '11px',
+      top: '2px',
+      left: '2px'
+    }
   }
 
   return (
